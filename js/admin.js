@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const artImageInput = document.getElementById("art-imageFile");
     const artPriceInput = document.getElementById("art-price");
     const artReferenceInput = document.getElementById("art-reference");
+    const artGroupSelect = document.getElementById("art-group");
     const formTitle = document.getElementById("form-title");
   
     const artworksListDiv = document.getElementById("artworks-list");
@@ -20,10 +21,11 @@ document.addEventListener("DOMContentLoaded", function () {
     let editMode = false;
     let editingArtId = null;
   
-    // Login
+    // Login event
     loginBtn.addEventListener("click", function () {
       const email = document.getElementById("admin-email").value;
       const password = document.getElementById("admin-password").value;
+  
       firebase.auth().signInWithEmailAndPassword(email, password)
         .then(() => {
           loginForm.style.display = "none";
@@ -35,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
   
-    // Logout
+    // Logout event
     logoutBtn.addEventListener("click", function () {
       firebase.auth().signOut().then(() => {
         adminDashboard.classList.add("hidden");
@@ -45,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   
-    // Load artworks
+    // Load artworks from Firestore and display them
     function loadArtworks() {
       artworksListDiv.innerHTML = "";
       db.collection("products").get()
@@ -61,6 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <p>${product.description}</p>
                 <p><strong>Price:</strong> ${product.price} NOK</p>
                 <p><strong>Reference:</strong> ${product.reference}</p>
+                <p><strong>Category:</strong> ${product.group || "N/A"}</p>
                 <div class="art-actions">
                   <button class="edit-btn" data-id="${doc.id}">Edit</button>
                   <button class="delete-btn" data-id="${doc.id}">Delete</button>
@@ -69,8 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
             artworksListDiv.appendChild(artDiv);
           });
-  
-          // Attach event listeners
+          // Attach event listeners for edit and delete buttons
           document.querySelectorAll(".edit-btn").forEach(button => {
             button.addEventListener("click", handleEdit);
           });
@@ -83,6 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
   
+    // Delete artwork
     function handleDelete(e) {
       const artId = e.target.getAttribute("data-id");
       if (confirm("Are you sure you want to delete this artwork?")) {
@@ -96,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   
+    // Edit artwork: populate the form with artwork data
     function handleEdit(e) {
       const artId = e.target.getAttribute("data-id");
       db.collection("products").doc(artId).get()
@@ -106,6 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
             artDescriptionInput.value = product.description;
             artPriceInput.value = product.price;
             artReferenceInput.value = product.reference;
+            artGroupSelect.value = product.group || "";
             formTitle.textContent = "Edit Artwork";
             submitArtBtn.textContent = "Update Artwork";
             editMode = true;
@@ -117,20 +122,22 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
   
+    // Handle add/update artwork action
     submitArtBtn.addEventListener("click", function () {
       const title = artTitleInput.value;
       const description = artDescriptionInput.value;
       const price = artPriceInput.value;
       const reference = artReferenceInput.value;
+      const group = artGroupSelect.value;
       const file = artImageInput.files[0];
   
-      if (!title || !description || !price || !reference) {
-        submitArtMessage.textContent = "Please fill in all fields.";
+      if (!title || !description || !price || !reference || !group) {
+        submitArtMessage.textContent = "Please fill in all fields and select a category.";
         return;
       }
   
       if (editMode) {
-        // If a new image is provided, upload it
+        // Update artwork; if a new image is provided, upload it first
         if (file) {
           const fileName = `${Date.now()}_${file.name}`;
           const storageRef = firebase.storage().ref(`artworks/${fileName}`);
@@ -147,7 +154,8 @@ document.addEventListener("DOMContentLoaded", function () {
                   description,
                   imageURL: downloadURL,
                   price,
-                  reference
+                  reference,
+                  group
                 })
                 .then(() => {
                   submitArtMessage.textContent = "Artwork updated successfully!";
@@ -161,12 +169,13 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           );
         } else {
-          // Update without changing image
+          // Update without a new image
           db.collection("products").doc(editingArtId).update({
             title,
             description,
             price,
-            reference
+            reference,
+            group
           })
           .then(() => {
             submitArtMessage.textContent = "Artwork updated successfully!";
@@ -178,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
           });
         }
       } else {
-        // Add new
+        // Add new artwork; image file is required
         if (!file) {
           submitArtMessage.textContent = "Please select an image file.";
           return;
@@ -198,7 +207,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 description,
                 imageURL: downloadURL,
                 price,
-                reference
+                reference,
+                group
               })
               .then(() => {
                 submitArtMessage.textContent = "Artwork added successfully!";
@@ -214,19 +224,21 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   
+    // Reset form to default "Add" mode
     function resetForm() {
       artTitleInput.value = "";
       artDescriptionInput.value = "";
       artImageInput.value = "";
       artPriceInput.value = "";
       artReferenceInput.value = "";
+      artGroupSelect.value = "";
       formTitle.textContent = "Add New Artwork";
       submitArtBtn.textContent = "Add Artwork";
       editMode = false;
       editingArtId = null;
     }
   
-    // Check auth on page load
+    // Check authentication state on page load
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         loginForm.style.display = "none";

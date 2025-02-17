@@ -51,11 +51,7 @@
     color: #777;
   }
   
-  /* ---------------------------------
-     HAMBURGER MENU ADDITIONS
-  ---------------------------------- */
-  
-  /* The hamburger icon (hidden by default on large screens) */
+  /* HAMBURGER MENU ADDITIONS */
   .hamburger {
     display: none;
     flex-direction: column;
@@ -72,10 +68,10 @@
   
   /* MAIN */
   main {
-    padding-top: 80px; /* So content isn't hidden under sticky navbar */
+    padding-top: 80px; /* To ensure content isn't hidden under the sticky navbar */
   }
   
-  /* GALLERY (index.html) */
+  /* GALLERY SECTION (index.html) */
   .gallery-section {
     padding: 4rem 2rem;
     text-align: center;
@@ -88,11 +84,17 @@
   }
   
   .gallery-grid {
+    /* This container is used for overall grouping; individual groups are handled below */
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Group container for artworks by category */
+  .gallery-grid-group {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1.5rem;
-    max-width: 1200px;
-    margin: 0 auto;
+    margin-bottom: 2rem;
   }
   
   .gallery-item {
@@ -264,6 +266,7 @@
     cursor: pointer;
     transition: background 0.3s ease;
   }
+  
   .logout-btn:hover {
     background: #e74c3c;
   }
@@ -289,7 +292,8 @@
   }
   
   .admin-form input,
-  .admin-form textarea {
+  .admin-form textarea,
+  .admin-form select {
     width: 100%;
     padding: 0.8rem;
     margin-bottom: 1rem;
@@ -327,7 +331,7 @@
     margin-bottom: 1rem;
   }
   
-  /* Card Grid for Artworks */
+  /* Card Grid for Artworks in Admin */
   .artworks-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -391,7 +395,7 @@
     background: #555;
   }
   
-  /* Error messages */
+  /* ERROR MESSAGES */
   .error-message {
     color: red;
     font-size: 0.9rem;
@@ -399,15 +403,15 @@
   
   /* RESPONSIVE DESIGN */
   @media (max-width: 768px) {
-    /* Show hamburger, hide normal nav links */
+    /* Navbar adjustments */
     .hamburger {
       display: flex;
     }
   
     .nav-links {
-      display: none;           /* Hidden by default on mobile */
+      display: none;
       position: absolute;
-      top: 70px;               /* Just below the navbar */
+      top: 70px;
       right: 2rem;
       background: #fff;
       flex-direction: column;
@@ -418,7 +422,7 @@
     }
   
     .nav-links.show {
-      display: flex;           /* Show links when .show is toggled */
+      display: flex;
     }
   
     .nav-links li {
@@ -426,26 +430,19 @@
       text-align: center;
     }
   
-    /* Navbar layout changes on mobile */
-    .navbar {
-      flex-direction: row;
-      position: relative;
-    }
-  
-    /* Gallery layout */
-    .gallery-grid {
+    /* Gallery layout on mobile */
+    .gallery-grid-group {
       grid-template-columns: 1fr;
     }
   
-    /* Product detail layout */
+    /* Product detail becomes column layout */
     .product-detail {
       flex-direction: column;
     }
   
-    /* Admin dashboard columns become one column */
+    /* Admin dashboard columns stack on mobile */
     .dashboard-container {
       grid-template-columns: 1fr;
     }
   }
-
   

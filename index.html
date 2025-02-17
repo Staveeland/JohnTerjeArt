@@ -16,7 +16,7 @@
   <header>
     <nav class="navbar">
       <div class="logo">Staveland Art</div>
-      <!-- Added hamburger menu -->
+      <!-- Added hamburger icon for mobile -->
       <div class="hamburger" id="hamburger">
         <span></span>
         <span></span>
@@ -35,7 +35,7 @@
     <section class="gallery-section">
       <h1>Art Gallery</h1>
       <div id="gallery" class="gallery-grid">
-        <!-- Gallery items will be dynamically inserted here -->
+        <!-- Gallery items will be dynamically inserted here, grouped by category -->
       </div>
     </section>
   </main>
@@ -51,9 +51,9 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
   <!-- Our Firebase configuration -->
   <script src="js/firebase-config.js"></script>
-  <!-- Custom JS to load the gallery -->
+  <!-- Custom JS to load the gallery with groups -->
   <script src="js/index.js"></script>
-  
+
   <!-- Script to toggle hamburger menu -->
   <script>
     document.addEventListener("DOMContentLoaded", function() {

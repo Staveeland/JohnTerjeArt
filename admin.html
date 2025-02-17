@@ -16,13 +16,12 @@
   <header>
     <nav class="navbar">
       <div class="logo">Staveland Art Admin</div>
-      <!-- Hamburger icon -->
+      <!-- Hamburger icon for mobile -->
       <div class="hamburger" id="hamburger">
         <span></span>
         <span></span>
         <span></span>
       </div>
-      <!-- Navigation links -->
       <ul class="nav-links" id="nav-links">
         <li><a href="index.html">Gallery</a></li>
         <li><a href="about.html">About</a></li>
@@ -35,7 +34,7 @@
   <main>
     <section class="admin-section">
       <div id="admin-container">
-        <!-- Login Form (hidden after login) -->
+        <!-- Admin Login Form -->
         <div id="login-form" class="form-container">
           <h2>Admin Login</h2>
           <input type="email" id="admin-email" placeholder="Email" />
@@ -43,7 +42,7 @@
           <button id="login-btn">Login</button>
           <p id="login-error" class="error-message"></p>
         </div>
-        <!-- Dashboard (shown after login) -->
+        <!-- Admin Dashboard (shown after login) -->
         <div id="admin-dashboard" class="hidden">
           <div class="dashboard-header">
             <h2>Admin Dashboard</h2>
@@ -58,6 +57,15 @@
               <input type="file" id="art-imageFile" accept="image/*" />
               <input type="number" id="art-price" placeholder="Price in NOK" />
               <input type="text" id="art-reference" placeholder="Reference Number" />
+              <!-- New Category Selection -->
+              <label for="art-group">Category:</label>
+              <select id="art-group">
+                <option value="">Select Category</option>
+                <option value="nature">Nature</option>
+                <option value="portrait">Portrait</option>
+                <option value="still life">Still Life</option>
+                <option value="abstract">Abstract</option>
+              </select>
               <button id="submit-art-btn">Add Artwork</button>
               <p id="submit-art-message"></p>
             </div>
