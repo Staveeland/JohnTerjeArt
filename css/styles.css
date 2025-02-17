@@ -5,6 +5,11 @@
     box-sizing: border-box;
   }
   
+  /* UTILITY */
+  .hidden {
+    display: none !important;
+  }
+  
   /* BASE */
   body {
     font-family: 'Raleway', sans-serif;
@@ -84,7 +89,7 @@
   }
   
   .gallery-grid {
-    /* This container is used for overall grouping; individual groups are handled below */
+    /* Container for grouping; individual groups styled below */
     max-width: 1200px;
     margin: 0 auto;
   }
@@ -445,4 +450,3 @@
       grid-template-columns: 1fr;
     }
   }
-  
