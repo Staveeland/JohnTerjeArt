@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Staveland Art - Contact</title>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">Staveland Art</div>
+      <!-- Hamburger icon -->
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <!-- Navigation links -->
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Gallery</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="contact-section" style="padding: 4rem 2rem; max-width: 600px; margin: 0 auto;">
+      <h1>Contact Us</h1>
+      <p>
+        Have questions or need more information? Reach out to us at:
+      </p>
+      <p>Email: <a href="mailto:contact@stavelandart.com">contact@stavelandart.com</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Staveland Art. All rights reserved.</p>
+  </footer>
+
+  <!-- Script to toggle hamburger menu -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const hamburger = document.getElementById("hamburger");
+      const navLinks = document.getElementById("nav-links");
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("show");
+      });
+    });
+  </script>
+</body>
+</html>

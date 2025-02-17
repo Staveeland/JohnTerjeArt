@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Staveland Art - Admin Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">Staveland Art Admin</div>
+      <!-- Hamburger icon -->
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <!-- Navigation links -->
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Gallery</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="admin.html" class="active">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="admin-section">
+      <div id="admin-container">
+        <!-- Login Form (hidden after login) -->
+        <div id="login-form" class="form-container">
+          <h2>Admin Login</h2>
+          <input type="email" id="admin-email" placeholder="Email" />
+          <input type="password" id="admin-password" placeholder="Password" />
+          <button id="login-btn">Login</button>
+          <p id="login-error" class="error-message"></p>
+        </div>
+        <!-- Dashboard (shown after login) -->
+        <div id="admin-dashboard" class="hidden">
+          <div class="dashboard-header">
+            <h2>Admin Dashboard</h2>
+            <button id="logout-btn" class="logout-btn">Logout</button>
+          </div>
+          <div class="dashboard-container">
+            <!-- Form Column -->
+            <div class="admin-form">
+              <h3 id="form-title">Add New Artwork</h3>
+              <input type="text" id="art-title" placeholder="Title" />
+              <textarea id="art-description" placeholder="Description"></textarea>
+              <input type="file" id="art-imageFile" accept="image/*" />
+              <input type="number" id="art-price" placeholder="Price in NOK" />
+              <input type="text" id="art-reference" placeholder="Reference Number" />
+              <button id="submit-art-btn">Add Artwork</button>
+              <p id="submit-art-message"></p>
+            </div>
+            <!-- List Column -->
+            <div class="admin-list">
+              <h3>Existing Artworks</h3>
+              <div id="artworks-list" class="artworks-list">
+                <!-- Dynamically loaded artwork cards appear here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Staveland Art. All rights reserved.</p>
+  </footer>
+
+  <!-- Script to toggle hamburger menu -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const hamburger = document.getElementById("hamburger");
+      const navLinks = document.getElementById("nav-links");
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("show");
+      });
+    });
+  </script>
+  <!-- Firebase scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
